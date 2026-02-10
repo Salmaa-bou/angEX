@@ -1,0 +1,21 @@
+<!-- src/app/app.component.html -->
+<div class="app-container">
+  <header class="app-header">
+    <div class="container">
+      <h1>{{ title }}</h1>
+      <nav>
+        <a routerLink="/products" routerLinkActive="active">Products</a>
+      </nav>
+    </div>
+  </header>
+  
+  <main class="app-main">
+    <router-outlet></router-outlet>
+  </main>
+  
+  <footer class="app-footer">
+    <div class="container">
+      <p>&copy; {{ currentYear }} Product Management System. All rights reserved.</p>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,103 @@
+
+<!-- PURPOSE: Product form template - visual structure of form -->
+<!-- LAYER: Presentation (UI) -->
+<!-- WHY: Separate HTML from logic; enable designers to modify without touching TypeScript -->
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+  <h3>{{ product ? 'Edit Product' : 'Add New Product' }}</h3>
+  
+  <div class="form-group">
+    <label for="name">Product Name *</label>
+    <input 
+      id="name" 
+      formControlName="name" 
+      type="text" 
+      class="form-control"
+      [class.is-invalid]="hasError('name', 'required') || hasError('name', 'minlength') || hasError('name', 'maxlength')"
+      placeholder="Enter product name"
+    >
+    <div *ngIf="hasError('name', 'required')" class="invalid-feedback">
+      Name is required
+    </div>
+    <div *ngIf="hasError('name', 'minlength')" class="invalid-feedback">
+      Name must be at least 2 characters
+    </div>
+    <div *ngIf="hasError('name', 'maxlength')" class="invalid-feedback">
+      Name cannot exceed 200 characters
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea 
+      id="description" 
+      formControlName="description" 
+      class="form-control"
+      [class.is-invalid]="hasError('description', 'maxlength')"
+      placeholder="Enter product description"
+    ></textarea>
+    <div *ngIf="hasError('description', 'maxlength')" class="invalid-feedback">
+      Description cannot exceed 500 characters
+    </div>
+  </div>
+  
+  <div class="form-row">
+    <div class="form-group">
+      <label for="price">Price *</label>
+      <div class="input-group">
+        <span class="input-group-text">$</span>
+        <input 
+          id="price" 
+          formControlName="price" 
+          type="number" 
+          step="0.01"
+          class="form-control"
+          [class.is-invalid]="hasError('price', 'required') || hasError('price', 'min')"
+          placeholder="0.00"
+        >
+      </div>
+      <div *ngIf="hasError('price', 'required')" class="invalid-feedback">
+        Price is required
+      </div>
+      <div *ngIf="hasError('price', 'min')" class="invalid-feedback">
+        Price must be greater than $0.00
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="stockQuantity">Stock Quantity *</label>
+      <input 
+        id="stockQuantity" 
+        formControlName="stockQuantity" 
+        type="number" 
+        class="form-control"
+        [class.is-invalid]="hasError('stockQuantity', 'required') || hasError('stockQuantity', 'min')"
+        placeholder="0"
+      >
+      <div *ngIf="hasError('stockQuantity', 'required')" class="invalid-feedback">
+        Stock quantity is required
+      </div>
+      <div *ngIf="hasError('stockQuantity', 'min')" class="invalid-feedback">
+        Stock quantity cannot be negative
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-actions">
+    <button 
+      type="submit" 
+      class="btn btn-primary"
+      [disabled]="productForm.invalid || productForm.pristine"
+    >
+      <span *ngIf="product">Update Product</span>
+      <span *ngIf="!product">Add Product</span>
+    </button>
+    <button 
+      type="button" 
+      class="btn btn-secondary"
+      (click)="onCancel()"
+      *ngIf="product"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

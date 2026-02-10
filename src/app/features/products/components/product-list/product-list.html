@@ -1,0 +1,69 @@
+<!-- PURPOSE: Product list template - visual structure of product management -->
+<!-- LAYER: Presentation (UI) -->
+<!-- WHY: Separate presentation from logic; enable responsive design -->
+<div class="container">
+  <div class="page-header">
+    <h1>Product Management</h1>
+    <p class="subtitle">Manage your product inventory</p>
+  </div>
+  
+  <!-- ERROR STATE -->
+  @if (state.error(); as error) {
+    <div class="error">
+      <p>{{ error }}</p>
+      <button class="btn btn-primary" (click)="state.loadProducts()">Retry Loading</button>
+      <button class="btn btn-secondary" (click)="state.clearError()">Dismiss</button>
+    </div>
+  }
+  
+  <!-- LOADING STATE -->
+  @if (state.loading()) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Loading products...</p>
+    </div>
+  }
+  
+  <!-- MAIN CONTENT (when not loading and no error) -->
+  @if (!state.loading() && !state.error()) {
+    <!-- ADD/EDIT FORM -->
+    <app-product-form 
+      [product]="editingProduct()" 
+      (productSubmitted)="onProductSubmitted($event)"
+      (cancel)="cancelEdit()"
+    ></app-product-form>
+    
+    <!-- EMPTY STATE -->
+    @if (state.products().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">📦</div>
+        <h2>No Products Found</h2>
+        <p>Add your first product to get started</p>
+      </div>
+    }
+    
+    <!-- DATA TABLE (when products exist) -->
+    @if (state.products().length > 0) {
+      <div class="table-container">
+        <app-data-table 
+          [data]="state.products()" 
+          [columns]="columns"
+          (edit)="editProduct($event)"
+          (delete)="openDeleteConfirmation($event.id)"
+        ></app-data-table>
+      </div>
+    }
+  }
+  
+  <!-- CONFIRMATION DIALOG -->
+  @if (showConfirmation()) {
+    <app-confirmation-dialog 
+      title="Delete Product" 
+      message="Are you sure you want to delete this product? This action cannot be undone."
+      confirmText="Delete"
+      cancelText="Cancel"
+      (confirm)="confirmDelete()"
+      (cancel)="closeConfirmation()"
+    ></app-confirmation-dialog>
+  }
+</div>

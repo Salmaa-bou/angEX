@@ -1,0 +1,29 @@
+<!-- src/app/shared/components/data-table/data-table.component.html -->
+<table class="data-table">
+  <thead>
+    <tr>
+      @for (col of columns; track col.field) {
+        <th>{{ col.header }}</th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of data; track $index) {
+      <tr>
+        @for (col of columns; track col.field) {
+          @if (col.actions) {
+            <td class="actions-cell">
+              <button class="btn btn-sm btn-primary" (click)="edit.emit(row)">✏️ Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="delete.emit(row)">🗑️ Delete</button>
+            </td>
+          } @else {
+            <td [class]="col.format">
+         
+              {{ formatValue(getCellValue(row, col.field), col.format) }}
+            </td>
+          }
+        }
+      </tr>
+    }
+  </tbody>
+</table>

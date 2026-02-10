@@ -1,0 +1,111 @@
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.data-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.data-table thead tr th {
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.data-table tbody tr {
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.data-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background: var(--gray-50);
+  transform: scale(1.01);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.data-table tbody td {
+  padding: 1rem 1.25rem;
+  color: var(--gray-700);
+  font-size: 0.9375rem;
+}
+
+.data-table tbody td.currency {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.data-table tbody td.date {
+  color: var(--gray-600);
+}
+
+.actions-cell {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.actions-cell .btn {
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .data-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .data-table thead,
+  .data-table tbody,
+  .data-table tr,
+  .data-table th,
+  .data-table td {
+    display: block;
+  }
+  
+  .data-table thead {
+    display: none;
+  }
+  
+  .data-table tbody tr {
+    margin-bottom: 1rem;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+  }
+  
+  .data-table tbody td {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+  
+  .data-table tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    font-weight: 600;
+    color: var(--gray-700);
+  }
+  
+  .actions-cell {
+    justify-content: flex-end;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-200);
+  }
+}
