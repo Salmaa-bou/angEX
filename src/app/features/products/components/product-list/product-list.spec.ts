@@ -1,35 +1,32 @@
-/// <reference types="jasmine" />
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductList } from './product-list';
 import { ProductForm } from '../product-form/product-form';
 import { DataTable} from '../../../../shared/components/data-table/data-table';
 import { ConfirmationDialog} from '../../../../shared/components/confirmation-dialog/confirmation-dialog';
 import { ProductStateService } from '../../services/product-state.service';
 import { Product } from '../../models/interfaces/product.model';
-import { signal } from '@angular/core';
-
-// Mock service with signals
-class MockProductStateService {
-  products = signal<Product[]>([
-    { id: 1, name: 'Laptop', description: 'Gaming laptop', price: 999.99, stockQuantity: 10, isActive: true, createdAt: new Date().toISOString(), updatedAt: null }
-  ]);
-  loading = signal(false);
-  error = signal(null);
-  loadProducts = jasmine.createSpy('loadProducts');
-  addProduct = jasmine.createSpy('addProduct');
-  updateProduct = jasmine.createSpy('updateProduct');
-  deleteProduct = jasmine.createSpy('deleteProduct');
-  clearError = jasmine.createSpy('clearError');
-}
+import { signal, WritableSignal } from '@angular/core';
 
 describe('ProductListComponent', () => {
   let component: ProductList;
   let fixture: ComponentFixture<ProductList>;
-  let mockStateService: MockProductStateService;
+  let mockStateService: any; // Type relaxed for runtime creation
 
   beforeEach(async () => {
-    mockStateService = new MockProductStateService();
-    
+    // ✅ CRITICAL: Create ENTIRE mock INSIDE beforeEach (Jasmine context available)
+    mockStateService = {
+      products: signal<Product[]>([
+        { id: 1, name: 'Laptop', description: 'Gaming laptop', price: 999.99, stockQuantity: 10, isActive: true, createdAt: new Date().toISOString(), updatedAt: null }
+      ]),
+      loading: signal(false),
+      error: signal(null),
+      loadProducts: vi.fn(),    // ✅ jasmine AVAILABLE here
+      addProduct: vi.fn(),         // ✅ jasmine AVAILABLE here
+      updateProduct: vi.fn(),   // ✅ jasmine AVAILABLE here
+      deleteProduct: vi.fn(),   // ✅ jasmine AVAILABLE here
+      clearError: vi.fn()          // ✅ jasmine AVAILABLE here
+    };
+
     await TestBed.configureTestingModule({
       imports: [
         ProductList,

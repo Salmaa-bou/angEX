@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataTable } from './data-table';
 import { Product } from '../../../features/products/models/interfaces/product.model';
 
@@ -46,7 +46,7 @@ describe('DataTableComponent', () => {
   });
 
   it('should emit edit event', () => {
-    spyOn(component.edit, 'emit');
+    vi.spyOn(component.edit, 'emit');
     const compiled = fixture.nativeElement as HTMLElement;
     const editButton = compiled.querySelector('button') as HTMLButtonElement;
     editButton.click();
@@ -54,7 +54,7 @@ describe('DataTableComponent', () => {
   });
 
   it('should emit delete event', () => {
-    spyOn(component.delete, 'emit');
+    vi.spyOn(component.delete, 'emit');
     const compiled = fixture.nativeElement as HTMLElement;
     const deleteButtons = compiled.querySelectorAll('button');
     // Second button is delete (after edit)

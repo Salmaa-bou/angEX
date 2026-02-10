@@ -1,5 +1,4 @@
-/// <reference types="jasmine" />
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfirmationDialog } from './confirmation-dialog';
 
 describe('ConfirmationDialogComponent', () => {
@@ -31,7 +30,7 @@ describe('ConfirmationDialogComponent', () => {
   });
 
   it('should emit confirm event on confirm button click', () => {
-    spyOn(component.confirm, 'emit');
+    vi.spyOn(component.confirm, 'emit');
     const compiled = fixture.nativeElement as HTMLElement;
     const confirmButton = compiled.querySelector('.btn-danger') as HTMLButtonElement;
     confirmButton.click();
@@ -39,7 +38,7 @@ describe('ConfirmationDialogComponent', () => {
   });
 
   it('should emit cancel event on cancel button click', () => {
-    spyOn(component.cancel, 'emit');
+    vi.spyOn(component.cancel, 'emit');
     const compiled = fixture.nativeElement as HTMLElement;
     const cancelButton = compiled.querySelector('.btn-secondary') as HTMLButtonElement;
     cancelButton.click();
@@ -47,7 +46,7 @@ describe('ConfirmationDialogComponent', () => {
   });
 
   it('should emit cancel when clicking overlay', () => {
-    spyOn(component.cancel, 'emit');
+    vi.spyOn(component.cancel, 'emit');
     const compiled = fixture.nativeElement as HTMLElement;
     const overlay = compiled.querySelector('.dialog-overlay') as HTMLElement;
     overlay.click();
@@ -55,7 +54,7 @@ describe('ConfirmationDialogComponent', () => {
   });
 
   it('should NOT emit cancel when clicking inside dialog', () => {
-    spyOn(component.cancel, 'emit');
+    vi.spyOn(component.cancel, 'emit');
     const compiled = fixture.nativeElement as HTMLElement;
     const container = compiled.querySelector('.dialog-container') as HTMLElement;
     container.click();

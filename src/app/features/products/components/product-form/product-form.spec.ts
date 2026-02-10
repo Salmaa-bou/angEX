@@ -1,5 +1,4 @@
-/// <reference types="jasmine" />
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductForm } from './product-form';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -29,16 +28,17 @@ describe('ProductFormComponent', () => {
     component.productForm.setValue({
       name: '',
       description: '',
-      price: 0,
-      stockQuantity: 0
+      price: null,
+      stockQuantity: null
     });
+    component.productForm.markAllAsTouched(); 
     expect(component.name?.hasError('required')).toBe(true);
     expect(component.price?.hasError('required')).toBe(true);
     expect(component.stockQuantity?.hasError('required')).toBe(true);
   });
 
   it('should emit productSubmitted on valid submit', () => {
-    spyOn(component.productSubmitted, 'emit');
+    vi.spyOn(component.productSubmitted, 'emit');
     
     component.productForm.setValue({
       name: 'Keyboard',
@@ -58,7 +58,7 @@ describe('ProductFormComponent', () => {
   });
 
   it('should not emit on invalid submit', () => {
-    spyOn(component.productSubmitted, 'emit');
+    vi.spyOn(component.productSubmitted, 'emit');
     component.productForm.setValue({
       name: '',
       description: '',
@@ -70,7 +70,7 @@ describe('ProductFormComponent', () => {
   });
 
   it('should reset form on cancel', () => {
-    spyOn(component.cancel, 'emit');
+    vi.spyOn(component.cancel, 'emit');
     component.productForm.setValue({
       name: 'Test',
       description: 'Test',

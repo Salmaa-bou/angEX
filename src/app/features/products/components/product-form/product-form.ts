@@ -84,9 +84,14 @@ export class ProductForm implements OnInit, OnChanges{
     }
   }
   onCancel() {
-    this.productForm.reset();
-    this.cancel.emit();
-  }
+    this.productForm.reset({
+    name: '',
+    description: '',
+    price: 0,
+    stockQuantity: 0
+  });
+  this.cancel.emit();
+}
   hasError(controlName: string, errorName: string): boolean {
     const control = this.productForm.get(controlName) ;
     return !!(control && control.hasError(errorName) && control.touched);
